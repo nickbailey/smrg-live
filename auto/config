@@ -1,0 +1,10 @@
+#!/bin/sh
+
+lb config noauto \
+	--distribution wheezy \
+	--binary-images iso-hybrid \
+	--architecture i386 \
+	--linux-flavours 686 \
+	--archive-areas "main contrib" \
+	--package-lists lxde \
+	"${@}"

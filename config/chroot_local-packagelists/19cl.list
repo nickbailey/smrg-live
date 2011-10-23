@@ -1,0 +1,7 @@
+# Packages for the 19-tone WX7
+
+alsa-firmware-loaders
+libstk0c2a
+puredata
+pd-zexy
+pd-cyclone

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=19cl
+Comment=A 19-ET synthesiser for the WX7 and Footswitches using PureData
+Exec=/usr/local/bin/19cl
+Icon=19cl
+Terminal=false
+Type=Application
+MimeType=text/x-puredata
+Categories=Audio

@@ -1,0 +1,66 @@
+Science and Music Research Group
+Live Software Distribution/Demonstration images
+===============================================
+
+These are debian live-build configurations to build a
+hybrid iso (one that can be written to a USB stick or
+to a CD-ROM).
+
+The base distribution is wheezy (currently testing).
+At the time of writing, testing is young, and the live-build
+utilities it contains do not produce a usb-hdd image
+correctly. This will change when live-build starts to
+work better.
+
+The live image produced is based on packages obtained
+from debian main with the following exceptions:
+
+ * alsa-firmware-loaders (from contrib)
+   and its dependencies
+ * firmware for the Tascam US-122 used locally
+   at the SMRG: this was obtained from
+      ftp://ftp.alsa-project.org/pub/firmware/
+
+The rest of the material here is by members of the
+SMRG, in alphabetical order:
+
+   Nick Bailey
+   Bill Evans
+
+and is made available under the GPL and, where noted,
+other licences.
+
+SMRG Applications on this distribution
+--------------------------------------
+
+ * 19cl: a PD application to allow a WX7 wind controller
+         and two foot switches to be played in 19ET
+
+Building
+--------
+
+   apt-get install live-build
+   lb clean && lb build
+
+produces a file called binary-hybrid.iso which can be
+dd'd onto a USB flash key (NOT a partition of it!) or
+used by (e.g.) wodim to write a CD.
+
+live-build issues
+-----------------
+
+As a bug-fix, the file
+
+   ./config/binary_local-hooks/006-kernel.binary.sh
+
+contains code to move the kernel files to a place where
+the boot loader will find them. Hopefully this can be
+removed as the wheezy version of live-build stabilises.
+
+At the time of writing, I have not successfully build
+a usb-hdd image ("no operating system found" problem)
+This is a shame, because it's my preferred image type
+(allowing as it does a persistent home partition on the
+same device).
+
+

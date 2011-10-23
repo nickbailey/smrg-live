@@ -1,0 +1,7 @@
+#!/bin/dash
+xset r off
+cd /usr/local/lib/19cl
+/usr/bin/pd -path /usr/local/lib/pd/stk2pd -path /usr/lib/pd/extra/cyclone -path /usr/lib/pd/extra/zexy -lib Clarinet~ -lib zexy -midiindev 1 "$@" PD\ Clarinet\ \[05\].pd
+cd - > /dev/null
+xset r on
+

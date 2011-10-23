@@ -1,0 +1,4 @@
+#!/bin/sh
+
+lb build noauto \
+	"${@}" 2>&1 | tee binary.log
