@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Ill-Tempered Clavier
+Comment=A Scordatura Harmonium sythesiser based on Fluidsynth
+Exec=/usr/local/bin/start_mmm
+Icon=ill-tempered_clavier
+Terminal=true
+Type=Application
+Categories=Audio

@@ -1,0 +1,146 @@
+#!/usr/bin/python
+
+from Tkinter import *
+import glob
+import time
+import sys
+import subprocess
+import atexit
+
+# Name and numbers of sound fonts
+# (must agree with numbers in fs_setup)
+soundfonts = [
+  ('Harmonium', 1),
+  ('Organ', 2)
+]
+
+# Tuning names and program numbers
+# (must agree with numbers in fs_setup)
+tunings = [
+  ('19-ET', 1),
+  ('19-MT', 2),
+  ('12-ET', 3)
+]
+
+jackd = '/usr/bin/jackd'
+qjackctl = '/usr/bin/qjackctl'
+qjackctl_args = ['--start']
+fluidsynth = '/usr/bin/fluidsynth'
+fluidsynth_args = ['--disable-lash',
+                   '--connect-jack-outputs',
+                   '--load-config=/usr/local/share/fluidsynth/fs_setup']
+
+class Synthesiser:
+    def __init__(self):
+        # Use qjackctl to ensure jackd gets started 
+        jackdRunning = False
+        sink = open('/dev/null', 'w')
+        self.jackControl = subprocess.Popen([qjackctl] + qjackctl_args,
+                                            stdout=sink,
+                                            stderr=sink)
+          
+        # Wait at least 20 seconds for jackd to become available
+        
+        tries = 0
+        jackdTimeout = 20
+        print "\n"
+        print "NOTICE: Don't forget to connect your controller to the"
+        print "        syntesiser in the Jack Audio Connection Kit window\n" 
+        sys.stdout.write('Waiting for jackd..')
+        sys.stdout.flush()
+        while tries < jackdTimeout and not jackdRunning:
+            sys.stdout.write('.')
+            sys.stdout.flush()
+            for process in glob.glob('/proc/*/cmdline'):
+                try:
+                    f = open(process, 'r')
+                    jackdRunning |= f.read().startswith(jackd)
+                    f.close()
+                    if jackdRunning: break
+                except:
+                    pass
+            if not jackdRunning:
+                tries = tries + 1
+                time.sleep(1)
+        # Either the daemon started or more the timeout elapsed
+        if jackdRunning:
+            print ' live.'
+        else:
+            print "\nTimeout waiting for jackd to start. Aborting."
+            exit(1)
+        # Start the synthesiser itself
+        self.synth = subprocess.Popen([fluidsynth] + fluidsynth_args,
+                                      stdin=subprocess.PIPE)
+
+    def sendCommand(self, cmd):
+        self.synth.stdin.write(cmd + "\n")
+
+    def setTuning(self, tuning):
+        self.sendCommand('settuning 0 0 {}'.format(tuning))
+
+    def setFont(self, font):
+        self.sendCommand('select 0 {} 0 0'.format(font))
+
+    def closeDown(self):
+        print 'Closing down synthesiser'
+        self.sendCommand('quit')
+
+class Application(Frame):
+    def createWidgets(self):
+        stack = Frame(self)
+        group = LabelFrame(stack, text='Sound Font', padx=5, pady=5)
+        self.sf = IntVar()
+        self.sf.set(soundfonts[0][1])
+        for text, mode in soundfonts:
+            cb = lambda: self.synth.setFont(self.sf.get())
+            b = Radiobutton(master = group, text = text,
+                            variable = self.sf, value = mode,
+                            command = cb)
+            b.pack(anchor=W)
+        group.pack({'side' : 'left',
+                    'fill' : 'y',
+                    'expand' : 1})
+
+        group = LabelFrame(stack, text='Temperament', padx=5, pady=5)
+        self.temperament = IntVar()
+        self.temperament.set(tunings[0][1])
+        for text, mode in tunings:
+            cb = lambda: self.synth.setTuning(self.temperament.get())
+            b = Radiobutton(master = group, text = text,
+                            variable = self.temperament, value = mode,
+                            command = cb)
+            b.pack(anchor=W)
+        group.pack({'side' : 'left',
+                    'fill' : 'y',
+                    'expand' : 1})
+
+	stack.pack({'side' : 'top'})
+
+        quitB = Button(self)
+        quitB['text'] = 'Quit'
+        quitB['fg']   = 'red'
+        quitB['command'] =  self.quit
+        quitB['underline'] = 0
+
+        quitB.pack({'side': 'bottom',
+                    'fill': 'x',
+                    'expand': 1})
+
+        self.bind_all('<Control-q>', lambda e: self.quit())
+
+
+    def __init__(self, master=None):
+        self.synth = Synthesiser()
+
+        Frame.__init__(self, master)
+        self.pack()
+        self.createWidgets()
+
+        atexit.register(self.synth.closeDown)
+
+root = Tk()
+root.title('Fluidsynth Retuned')
+app = Application(master=root)
+app.mainloop()
+root.destroy()
+
