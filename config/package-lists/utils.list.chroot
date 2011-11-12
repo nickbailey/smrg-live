@@ -3,6 +3,3 @@
 # Volume control and mixer for the system tray
 volumeicon-alsa
 
-# Install debian on host
-debian-installer-launcher
-

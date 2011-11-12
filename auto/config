@@ -12,7 +12,7 @@ lb config noauto \
 	--parent-mirror-bootstrap "http://localhost:3142/ftp.uk.debian.org/debian/" \
 	--mirror-chroot "http://localhost:3142/ftp.uk.debian.org/debian/" \
 	--parent-mirror-chroot "http://localhost:3142/ftp.uk.debian.org/debian/" \
-	--mirror-binary "http://localhost:3142/ftp.uk.debian.org/debian/" \
+	--mirror-binary "http://ftp.uk.debian.org/debian/" \
 	--parent-mirror-binary "http://localhost:3142/ftp.uk.debian.org/debian/" \
 	--apt-indices false \
 	--bootappend-live "locale=uk" \
