@@ -8,6 +8,6 @@ set -e
 if [ -e binary/syslinux/isolinux.bin ] ; then
 	echo "NB: Renaming isolinux files to syslinux."
 	mv binary/syslinux/isolinux.cfg binary/syslinux/syslinux.cfg || true
-	mv binary/syslinux/isolinux.bin binary/syslinux/syslinux.cfg || true
+	mv binary/syslinux/isolinux.bin binary/syslinux/syslinux.bin || true
 fi
 
