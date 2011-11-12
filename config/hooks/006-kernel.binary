@@ -2,7 +2,7 @@
 
 set -e
 
-[-e binary/live/vmlinuz ] && \
+[ -e binary/live/vmlinuz ] && \
     echo "NB: vmlinuz has short-form name! Hook obsolete?"
 
 if [ -e binary/live/vmlinuz-* ] ; then
