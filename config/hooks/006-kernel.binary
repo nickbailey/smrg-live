@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+
+[-e binary/live/vmlinuz ] && \
+    echo "NB: vmlinuz has short-form name! Hook obsolete?"
+
+if [ -e binary/live/vmlinuz-* ] ; then
+	echo "NB: Moving kernel and initrd files."
+	echo "NB:    original has name of form" \
+	     "$(basename binary/live/vmlinuz-*)."
+	mv binary/live/vmlinuz-* binary/live/vmlinuz || true
+	mv binary/live/initrd.img-* binary/live/initrd.img || true
+fi

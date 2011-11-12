@@ -1,0 +1,7 @@
+# Packages for Ill-Tempered Clavier,
+# the scordatura keyboard
+
+python-tk
+qjackctl
+fluidsynth
+
