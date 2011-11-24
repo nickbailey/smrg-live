@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Copy all of the files installed by rosegarden into includes.chroot
+# Make sure to fiddle the install log so all of the targets are files
+#    (i.e. the install target is the path to a file, not a directory)
+
+ROSEGARDEN_INSTALL_LOG=rosegarden_install.log
+
+cat $ROSEGARDEN_INSTALL_LOG | \
+    awk '$1=="/usr/bin/install" { print $NF; }' | \
+    while read fn ; do
+        # ls -l "$fn"
+        # Find the source directory and strip the leading /
+        # Then prefix the target includes directory
+        dir=$(dirname "$fn")
+        dir="config/includes.chroot/${dir#/}"
+        mkdir -p "$dir"
+        cp "$fn" "$dir"
+    done
+
