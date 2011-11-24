@@ -1,0 +1,17 @@
+# Run-time libraries and applications for Rosegarden
+# These are required because the version on the live media is
+# one we build from our own source.
+
+libqtgui4
+libqt4-xml
+libqt4-network
+libqt4-core
+ladspa-sdk
+liblo7
+libircclient1
+liblrdf0
+libfftw3-3
+lilypond
+libsamplerate0
+libsndfile1
+
