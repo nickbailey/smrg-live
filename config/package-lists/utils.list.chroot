@@ -1,5 +1,7 @@
 # Shiney things
+firmware-linux-nonfree
 debian-installer-launcher
+audacity
 
 # Volume control and mixer for the system tray
 volumeicon-alsa

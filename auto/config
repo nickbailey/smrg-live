@@ -12,10 +12,10 @@ lb config noauto \
 	--debian-installer "cdrom" \
 	--binary-images "hdd" \
 	--package-lists "lxde" \
-	--archive-areas "main contrib" \
-	--parent-archive-areas "main contrib" \
-	--mirror-bootstrap "http://localhost:3142/ftp.uk.debian.org/debian/" \
-	--parent-mirror-bootstrap "http://localhost:3142/ftp.uk.debian.org/debian/" \
+	--archive-areas "main contrib non-free" \
+	--parent-archive-areas "main contrib non-free" \
+	--mirror-bootstrap "http://ftp.uk.debian.org/debian/" \
+	--parent-mirror-bootstrap "http://ftp.uk.debian.org/debian/" \
 	--mirror-chroot "http://ftp.uk.debian.org/debian/" \
 	--parent-mirror-chroot "http://ftp.uk.debian.org/debian/" \
 	--mirror-binary "http://ftp.uk.debian.org/debian/" \

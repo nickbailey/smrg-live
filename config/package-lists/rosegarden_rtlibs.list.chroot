@@ -8,7 +8,7 @@ libqt4-network
 libqt4-core
 ladspa-sdk
 liblo7
-libircclient1
+liblircclient0
 liblrdf0
 libfftw3-3
 lilypond
