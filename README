@@ -7,10 +7,6 @@ hybrid iso (one that can be written to a USB stick or
 to a CD-ROM).
 
 The base distribution is wheezy (currently testing).
-At the time of writing, testing is young, and the live-build
-utilities it contains do not produce a usb-hdd image
-correctly. This will change when live-build starts to
-work better.
 
 The live image produced is based on packages obtained
 from debian main with the following exceptions:
@@ -20,6 +16,11 @@ from debian main with the following exceptions:
  * firmware for the Tascam US-122 used locally
    at the SMRG: this was obtained from
       ftp://ftp.alsa-project.org/pub/firmware/
+ * Rosegarden with the SMRG Codicil (pitch tracking
+   of live performances). This is now incorporated
+   into the main stream of Rosegarden as of v11.11,
+   but we distribute our development version along
+   with its source snapshot.
 
 The rest of the material here is by members of the
 SMRG, in alphabetical order:
@@ -27,6 +28,7 @@ SMRG, in alphabetical order:
    Nick Bailey
    Bill Evans
    Dougie McGilvray
+   Graham Percival
 
 and is made available under the GPL and, where noted,
 other licences.
@@ -39,6 +41,8 @@ SMRG Applications on this distribution
  * Ill-Tempered Clavier: uses fluidsynth retuned to permit
          performance of 19-ET pieces on a "scordatura"
          keyboard
+ * The Rosegarden Codicil: a version of the Rosegarden
+         sequencer incorporating pitch tracking.
 
 Building
 --------
@@ -61,29 +65,19 @@ live-build issues
 
 As a bug-fix, the file
 
-   ./config/binary_local-hooks/006-kernel.binary.sh
+   ./config/hooks/006-kernel.binary
+   ./config/hooks/006-syslinux.binary
 
 contains code to move the kernel files to a place where
-the boot loader will find them. Hopefully this can be
-removed as the wheezy version of live-build stabilises.
+the boot loader will find them and to rename the isolinux
+files to syslinux. Hopefully this can be removed as the
+wheezy version of live-build stabilises. Look for comments
+in ./binary.log starting NB: which should give a clue as
+to when this happens.
 
-At the time of writing, I have not successfully build
-a usb-hdd image ("no operating system found" problem)
-This is a shame, because it's my preferred image type
-(allowing as it does a persistent home partition on the
-same device).
 
-NOTES
-
-10 November 2011
-
-Having upgraded to the sid version of live-build, it
-turns out all of the config directories have changed...
-
-Currently using the following in config/
-
-	package-lists		(not chroot_local-packagelists)
-	includes.chroot		(not chroot_local-includes)
+Build Notes
+-----------
 
 The binary local hook decribed above is also defeated
 (probably it too has been renamed). Now necessary to do the following
@@ -92,4 +86,23 @@ to the image once it's been written to the stick:
 	* mv vmlinux-* and initrd-* to vmlinuz and initrd as before
 	* rename syslinux/isolinux.* to syslinux
 	  (this has apparently been fixed upstream though)
+	  Seems these might have moved to config/hooks/
+	  and need to be called *.binary
+
+Version 2.6 of the kernel has now been renamed 3.x, and the version
+distributed with wheezy at the time of writing is 3.1.0. This causes
+the debian install to complain about incompatibility issues. Again,
+it is hoped that this will sort itself out as wheezy stabilizes.
+In any case:
+
+  *Installation of a debian system from this stick is untested!*
+
+Only try it if you know what you're doing.
+
+If you're going to add material to the stick, you'll probably want
+to install and set-up apt-cacher-ng to limit the quantity of network
+traffic by caching downloaded deb files locally. For this reason,
+auto/config has the --apt-http-proxy set to localhost:3142.
+To persude the bootstrap phase to use the cache too, it's necessary
+to export http_proxy=http://localhost:3142/ as well.
 
