@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Rosegarden
+Comment=The Rosegarden sequencer with the Glasgow Pitch Tracker
+Exec=/usr/local/bin/rosegarden %f
+Icon=rosegarden.png
+Terminal=false
+Type=Application
+Categories=Audio
