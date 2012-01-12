@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=SMRGYgurdy
+Comment=SMRG's Hurdygurdy synthesiser using a stiff string physical model
+Exec=lxterminal --command=/usr/local/bin/start_smrgygurdy
+Icon=smrgygurdy.xpm
+Terminal=false
+MimeType=text/plain
+Type=Application
+Categories=Audio

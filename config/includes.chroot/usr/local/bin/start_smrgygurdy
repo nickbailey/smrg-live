@@ -1,0 +1,7 @@
+#!/bin/dash
+
+export LD_LIBRARY_PATH=/usr/local/lib
+/usr/local/bin/smrgygurdy
+echo End of session.
+sleep 3
+
