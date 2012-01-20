@@ -1,0 +1,2 @@
+debconf passwd/user-default-groups string audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth iocard
+
