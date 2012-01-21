@@ -1,0 +1,8 @@
+# Packages for smrgygurdy, the Science and Music Research Group
+#   hurdy-GURDY.
+
+libcomedi0
+libboost-thread1.48.0
+libfftw3-3
+libconfig++8
+
