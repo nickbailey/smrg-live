@@ -43,12 +43,14 @@ SMRG Applications on this distribution
          keyboard
  * The Rosegarden Codicil: a version of the Rosegarden
          sequencer incorporating pitch tracking.
+ * SMRGygurdy: a physical-model-based MIDI hurdygurdy using
+         Graham Percival's artifastring library.
 
 Building
 --------
 
    apt-get install live-build
-   lb clean && lb build
+   lb clean && lb config && lb build
 
 depending upon the current configuration, produces either
 
@@ -76,24 +78,35 @@ in ./binary.log starting NB: which should give a clue as
 to when this happens.
 
 
-Build Notes
------------
+Build/Release Notes
+-------------------
 
-The binary local hook decribed above is also defeated
-(probably it too has been renamed). Now necessary to do the following
-to the image once it's been written to the stick:
+  *Addition of the default user to the group iocard*
 
-	* mv vmlinux-* and initrd-* to vmlinuz and initrd as before
-	* rename syslinux/isolinux.* to syslinux
-	  (this has apparently been fixed upstream though)
-	  Seems these might have moved to config/hooks/
-	  and need to be called *.binary
+This should simply be a matter of adding a boot-time parameter to
+auto/config, e.g.
 
-Version 2.6 of the kernel has now been renamed 3.x, and the version
-distributed with wheezy at the time of writing is 3.1.0. This causes
-the debian install to complain about incompatibility issues. Again,
-it is hoped that this will sort itself out as wheezy stabilizes.
-In any case:
+...
+        --bootappend-live "locales=en_GB.UTF-8 keyboard-layouts=gb user-default-
++groups=audio,cdrom,dip,floppy,video,plugdev,netdev,powerdev,scanner,bluetooth,i
++ocard persistent" \
+...
+
+or by the addition of a file with he extensions .preseed.chroot
+in config/preseed containing the line
+
+user-setup passwd/user-default-groups string [space-separated list of groups]
+
+
+  *Pre-loading of usbdux/comedi modules*
+
+This is imposed by an entry in /etc/modules. There are issues with the
+hot-plugging of a usb-dux interface, which can result in the filesystem
+becoming unstable.
+
+Best to plug the usb-dux in before booting up the system, and then removing
+and reinserting the USB plug if /dev/comedi* devices don't appear.
+
 
   *Installation of a debian system from this stick is untested!*
 
