@@ -3,38 +3,13 @@
 lb config noauto \
 	--apt-http-proxy "http://localhost:3142/" \
 	--distribution "wheezy" \
-	--parent-distribution "wheezy" \
-	--debian-installer-distribution "wheezy" \
-	--parent-debian-installer-distribution "wheezy" \
 	--architecture "i386" \
 	--linux-flavours "486" \
-	--debian-installer "cdrom" \
 	--binary-images "hdd" \
 	--package-lists "lxde" \
 	--archive-areas "main contrib non-free" \
-	--parent-archive-areas "main contrib non-free" \
 	--mirror-bootstrap "http://ftp.uk.debian.org/debian/" \
-	--parent-mirror-bootstrap "http://ftp.uk.debian.org/debian/" \
-	--mirror-chroot "http://ftp.uk.debian.org/debian/" \
-	--parent-mirror-chroot "http://ftp.uk.debian.org/debian/" \
-	--mirror-binary "http://ftp.uk.debian.org/debian/" \
-	--parent-mirror-binary "http://ftp.uk.debian.org/debian/" \
-	--mirror-debian-installer "http://ftp.uk.debian.org/debian/" \
-	--parent-mirror-debian-installer "http://ftp.uk.debian.org/debian/" \
 	--apt-indices false \
 	--bootappend-live "locales=en_GB.UTF-8 keyboard-layouts=gb persistent" \
 	"${@}"
-
-# These options make testing faster,
-# but you end up with the localhost proxy
-# in the images /etc/apt/sources.list
-#	--mirror-binary "http://localhost:3142/ftp.uk.debian.org/debian/" \
-#	--parent-mirror-binary "http://localhost:3142/ftp.uk.debian.org/debian/" \
-
-# Removed after problems with udev
-#	--linux-packages "linux-image-2.6" \
-
-# Should maybe be able to set user default groups with something like this?
-#	--bootappend-live "locales=en_GB.UTF-8 keyboard-layouts live-config.user-default-groups=gb,audio,cdrom,dip,floppy,video,plugdev,netdev,powerdev,scanner,bluetooth,iocard" \
-# Alternative way is to put stuff in config/chroot_local-preseed/user
 
