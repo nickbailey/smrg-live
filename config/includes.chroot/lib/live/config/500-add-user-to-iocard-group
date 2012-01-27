@@ -1,6 +1,0 @@
-#!/bin/sh
-
-echo
-echo "NB: live-config hook: adding user to group iocard"
-adduser user iocard
-
