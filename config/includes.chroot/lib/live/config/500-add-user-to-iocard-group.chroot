@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# from config/includes.chroot/lib/live/config
+
+echo -n " default-groups"
+
+EnsureUserInGroup()
+{
+    # add user $1 to group $2 if not already a member of that group
+
+    grep -q ^${2}:.\*\\\<${1}\\\> /etc/group || adduser $1 $2
+}
+
+EnsureUserInGroup user iocard
+
+#Also tried the following in config/hooks/500-add-user-to-iocard-group.chroot
+#Doesn't work :(
+#cmd="user-setup passwd/user-default-groups string audio cdrom dip floppy video plugdev netdev powerdev scanner bluetooth iocard"
+#
+#echo "NB:   piping the following to debconf-set-selections: $cmd"
+#echo $cmd | debconf-set-selections 
+

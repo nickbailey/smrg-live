@@ -1,5 +1,5 @@
 #!/bin/sh
 
-echo "NB: Running ldconfig to install locally installed libraries"
+echo "NB: Running ldconfig to recognise locally installed libraries"
 ldconfig
 
